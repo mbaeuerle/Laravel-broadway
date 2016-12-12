@@ -17,12 +17,6 @@
       "email": "n.widart@gmail.com"
     }
   ],
-  "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/mbaeuerle/broadway"
-        }
-    ],
   "require": {
     "php": ">=5.5.0",
     "doctrine/dbal": "~2.5",
