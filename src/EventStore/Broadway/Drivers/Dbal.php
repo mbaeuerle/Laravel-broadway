@@ -37,7 +37,7 @@ class Dbal implements Driver
             return $connection;
         });
 
-        return new DBALEventStore($connection, $payloadSerializer, $metadataSerializer, $table, true, new BinaryUuidConverter());
+        return new DBALEventStore($connection, $payloadSerializer, $metadataSerializer, $table, false, new BinaryUuidConverter());
     }
 
     /**
