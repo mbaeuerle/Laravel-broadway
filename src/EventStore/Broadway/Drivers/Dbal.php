@@ -1,7 +1,7 @@
 <?php namespace Nwidart\LaravelBroadway\EventStore\Broadway\Drivers;
 
 use Broadway\EventStore\DBALEventStore;
-use Broadway\UuidGenerator\Converter\BinaryUuidConverter; 
+use Broadway\UuidGenerator\Converter\BinaryUuidConverter;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
 use Nwidart\LaravelBroadway\EventStore\Driver;
@@ -37,7 +37,7 @@ class Dbal implements Driver
             return $connection;
         });
 
-        return new DBALEventStore($connection, $payloadSerializer, $metadataSerializer, $table, false, new BinaryUuidConverter());
+        return new DBALEventStore($connection, $payloadSerializer, $metadataSerializer, $table, 0, new BinaryUuidConverter());
     }
 
     /**
@@ -50,8 +50,9 @@ class Dbal implements Driver
         $connectionParams = $this->config->get("database.connections.{$driver}");
 
         $connectionParams['dbname'] = $connectionParams['database'];
-        $connectionParams['user'] = $connectionParams['username'];
-        unset($connectionParams['database'], $connectionParams['username']);
+        if ($connectionParams['driver'] !== 'sqlite') {
+            $connectionParams['user'] = $connectionParams['username'];
+        }        unset($connectionParams['database'], $connectionParams['username']);
         $connectionParams['driver'] = "pdo_".$connectionParams['driver'];
 
         return $connectionParams;
