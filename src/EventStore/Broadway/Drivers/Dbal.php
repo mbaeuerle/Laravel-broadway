@@ -26,7 +26,7 @@ class Dbal implements Driver
         $configuration = new Configuration();
 
         $connectionParams = $this->getStorageConnectionParameters();
-        $connection = DriverManager::getConnection($connectionParams, $configuration);
+        $connection = app()->make('db')->connection()->getDoctrineConnection();
         $payloadSerializer = app('Broadway\Serializer\SerializerInterface');
         $metadataSerializer = app('Broadway\Serializer\SerializerInterface');
 
