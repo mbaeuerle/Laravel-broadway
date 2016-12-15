@@ -26,7 +26,12 @@ class Dbal implements Driver
         $configuration = new Configuration();
 
         $connectionParams = $this->getStorageConnectionParameters();
-        $connection = app()->make('db')->connection()->getDoctrineConnection();
+        if($connectionParams['driver'] === 'pdo_sqlite') { // TODO Quick and dirty check for testing with inmemory sqlite
+            $connection = app()->make('db')->connection()->getDoctrineConnection();
+        } else {
+            $connection = DriverManager::getConnection($connectionParams, $configuration);
+        }
+
         $payloadSerializer = app('Broadway\Serializer\SerializerInterface');
         $metadataSerializer = app('Broadway\Serializer\SerializerInterface');
 
